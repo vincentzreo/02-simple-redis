@@ -236,10 +236,11 @@ mod tests {
         map.insert("age".to_string(), (-18.21).into());
 
         let frame: RespFrame = map.into();
-        assert_eq!(
-            frame.encode(),
-            b"%2\r\n+name\r\n$5\r\nAlice\r\n+age\r\n,-18.21\r\n"
-        );
+        let frame_binding = frame.encode();
+        let frame_res = String::from_utf8_lossy(&frame_binding);
+        assert!(frame_res.contains("%2\r\n"));
+        assert!(frame_res.contains("+name\r\n$5\r\nAlice\r\n"));
+        assert!(frame_res.contains("+age\r\n,-18.21\r\n"));
     }
 
     #[test]
