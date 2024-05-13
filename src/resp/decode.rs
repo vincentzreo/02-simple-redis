@@ -79,12 +79,14 @@ impl RespDecode for RespFrame {
                 let frame = RespSet::decode(buf)?;
                 Ok(frame.into())
             }
+            None => Err(RespError::NotComplete),
             _ => Err(RespError::InvalidFrameType(format!(
                 "expect_length: unknown frame type: {:?}",
                 buf
             ))),
         }
     }
+
     fn expect_length(buf: &[u8]) -> Result<usize, RespError> {
         let mut iter = buf.iter().peekable();
         match iter.peek() {

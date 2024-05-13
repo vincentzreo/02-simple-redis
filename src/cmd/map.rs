@@ -3,7 +3,7 @@ use crate::{RespArray, RespFrame, RespNull};
 use super::{extract_args, validate_command, CommandError, CommandExecutor, Get, Set, RESP_OK};
 
 impl CommandExecutor for Get {
-    fn execute(&self, backend: &crate::Backend) -> RespFrame {
+    fn execute(self, backend: &crate::Backend) -> RespFrame {
         match backend.get(&self.key) {
             Some(value) => value,
             None => RespFrame::Null(RespNull),
@@ -12,7 +12,7 @@ impl CommandExecutor for Get {
 }
 
 impl CommandExecutor for Set {
-    fn execute(&self, backend: &crate::Backend) -> RespFrame {
+    fn execute(self, backend: &crate::Backend) -> RespFrame {
         backend.set(self.key.clone(), self.value.clone());
         RESP_OK.clone()
     }
