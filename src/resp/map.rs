@@ -78,6 +78,12 @@ impl RespMap {
     }
 }
 
+impl From<HashMap<String, RespFrame>> for RespMap {
+    fn from(map: HashMap<String, RespFrame>) -> Self {
+        RespMap(map)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::BulkString;
